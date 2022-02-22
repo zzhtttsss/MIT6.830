@@ -1,6 +1,7 @@
 package simpledb.storage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -13,6 +14,12 @@ public class Tuple implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public TupleDesc tupleDesc;
+
+    public RecordId recordId;
+
+    public ArrayList<Field> fields;
+
     /**
      * Create a new tuple with the specified schema (type).
      *
@@ -22,7 +29,11 @@ public class Tuple implements Serializable {
      */
     public Tuple(TupleDesc td) {
         // some code goes here
-        //ssss
+        fields = new ArrayList<>(td.numFields());
+        for (int i = 0; i < td.numFields(); i++) {
+            fields.add(null);
+        }
+        tupleDesc = td;
     }
 
     /**
@@ -30,7 +41,7 @@ public class Tuple implements Serializable {
      */
     public TupleDesc getTupleDesc() {
         // some code goes here
-        return null;
+        return tupleDesc;
     }
 
     /**
@@ -39,7 +50,7 @@ public class Tuple implements Serializable {
      */
     public RecordId getRecordId() {
         // some code goes here
-        return null;
+        return this.recordId;
     }
 
     /**
@@ -50,6 +61,7 @@ public class Tuple implements Serializable {
      */
     public void setRecordId(RecordId rid) {
         // some code goes here
+        this.recordId = rid;
     }
 
     /**
@@ -62,6 +74,7 @@ public class Tuple implements Serializable {
      */
     public void setField(int i, Field f) {
         // some code goes here
+        fields.set(i, f);
     }
 
     /**
@@ -72,7 +85,7 @@ public class Tuple implements Serializable {
      */
     public Field getField(int i) {
         // some code goes here
-        return null;
+        return fields.get(i);
     }
 
     /**
@@ -85,7 +98,14 @@ public class Tuple implements Serializable {
      */
     public String toString() {
         // some code goes here
-        throw new UnsupportedOperationException("Implement this");
+        StringBuffer stringBuffer = new StringBuffer("");
+        for (int i = 0; i < fields.size(); i++) {
+            stringBuffer.append(fields.get(i).toString());
+            if (i != fields.size() - 1) {
+                stringBuffer.append(" ");
+            }
+        }
+        return stringBuffer.toString();
     }
 
     /**
@@ -95,7 +115,7 @@ public class Tuple implements Serializable {
     public Iterator<Field> fields()
     {
         // some code goes here
-        return null;
+        return fields.iterator();
     }
 
     /**
@@ -104,5 +124,6 @@ public class Tuple implements Serializable {
     public void resetTupleDesc(TupleDesc td)
     {
         // some code goes here
+        tupleDesc = td;
     }
 }
