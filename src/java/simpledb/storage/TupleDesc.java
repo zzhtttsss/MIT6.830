@@ -124,6 +124,9 @@ public class TupleDesc implements Serializable {
      */
     public Type getFieldType(int i) throws NoSuchElementException {
         // some code goes here
+        if (i < 0 || i >= this.tdItems.size()) {
+            throw new NoSuchElementException();
+        }
         return tdItems.get(i).fieldType;
     }
 
@@ -206,7 +209,6 @@ public class TupleDesc implements Serializable {
 
     public boolean equals(Object o) {
         // some code goes here
-        // TODO: 2022/2/22 加上try catch
         TupleDesc tupleDesc;
         try {
             tupleDesc = (TupleDesc) o;
